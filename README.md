@@ -113,7 +113,8 @@ deploy.ps1               # 一键构建 + 上传
 
 | 现象 | 原因 | 处理 |
 |---|---|---|
-| 浏览器打不开 | 地址少了端口 | 必须是 **http://localhost:4321/**，只输 `localhost` 会走 80 端口 |
+| 浏览器打不开本地站点 | 地址少了端口，或 dev 只绑了 IPv6（Windows 上 `localhost` 会解析成 `::1`） | 必须带端口：**http://localhost:4321/**。本项目已在 `astro.config.mjs` 里固定绑 IPv4，`localhost` 和 `127.0.0.1` 都能用；想让手机访问就 `pnpm dev --host` |
+| dev 运行期间提交/推送代码后页面打不开 | git 操作会让 dev 判定"配置文件变更"从而重启，重启的一两秒内请求会落空 | 等它起来刷新即可（线上站点不受影响） |
 | 首次打开转圈十几秒 | Vite 在现编译页面，属正常 | 等一次就好，之后是毫秒级 |
 | 提示 `Another astro dev server is already running` | 上次的 dev 进程还占着 4321 端口 | `pnpm dev:stop` |
 | 某页报 `xxx content not found`，或改了笔记不生效 | `.astro` 里的内容缓存被中断（改配置文件会触发 dev 自动重启，重启被打断时可能发生） | 先 `pnpm dev:stop`，再 `pnpm dev:clean` |

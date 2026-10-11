@@ -72,6 +72,14 @@ export default defineConfig({
 	base: "/",
 	trailingSlash: "always",
 
+	// 开发服务器监听地址。默认值 "localhost" 在 Windows 上会解析成 IPv6 的 ::1，
+	// 于是只监听 [::1]:4321，浏览器访问 127.0.0.1:4321 会被直接拒绝（表现为打不开、连接被拒）。
+	// 固定成 IPv4 回环后，localhost 与 127.0.0.1 都能正常打开。
+	// 想让手机或局域网设备访问，用 pnpm dev --host（会监听所有网卡）
+	server: {
+		host: "127.0.0.1",
+	},
+
 	// 字体配置 - 只加载实际使用的字体，跳过未引用的以加快构建
 	fonts: (() => {
 		// 禁用字体功能时直接返回空数组，跳过 Astro Font API 集成
