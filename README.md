@@ -122,13 +122,20 @@ deploy.ps1               # 一键构建 + 上传
 > [!TIP]
 > `.astro/` 只是缓存目录（已在 `.gitignore` 里），删掉没有任何副作用，下次启动会自动重建。凡是"内容明明在、dev 却说找不到"的怪问题，先试 `pnpm dev:clean`。
 
-## 发布到服务器
+## 部署
+
+当前用 **GitHub Pages**：免费、免备案、HTTPS 自动配置，推送 `main` 分支后由 GitHub Actions 自动构建发布。
+
+- 站点地址：<https://thegadflyandmontalleni.github.io/>
+- 首次部署、更新流程、换绑域名、排错：**[docs/DEPLOY-GITHUB.md](docs/DEPLOY-GITHUB.md)**
 
 ```powershell
-.\deploy.ps1 -Server root@你的服务器IP      # 构建并上传
+git add -A
+git commit -m "notes: 新增 xxx 笔记"
+git push          # 推送即发布，不需要本地 build
 ```
 
-首次部署（装 nginx、配站点、申请 HTTPS 证书）请看 **[docs/DEPLOY.md](docs/DEPLOY.md)**，nginx 配置直接用 [docs/nginx.conf](docs/nginx.conf)。
+如果以后想让国内访问更快，可以改用阿里云 + nginx——用的是**同一份 `dist/` 产物**，代码不用改，只改 `siteConfig.ts` 里的 `site_url`：见 **[docs/DEPLOY.md](docs/DEPLOY.md)** 与 [docs/nginx.conf](docs/nginx.conf)，一键脚本是 [deploy.ps1](deploy.ps1)。
 
 ## 上游与许可
 
